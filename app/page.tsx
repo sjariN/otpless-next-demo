@@ -6,9 +6,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter();
   useEffect(()=>initOTPless(callback),[]);
-  
+
   const callback = (otplessUser:any) => {
     localStorage.setItem('token',otplessUser.token);
     (window as any).location.href = "/result";
@@ -16,6 +15,7 @@ export default function Home() {
 
   return (
     <main>
+      <button className="loginBtn" id="otpless" data-custom="true">Login</button>
     </main>
   );
 }
