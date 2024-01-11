@@ -1,20 +1,21 @@
 "use client";
-import Image from 'next/image'
-import styles from './page.module.css'
-import { initOTPless } from '@/utils/initOtpless'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import styles from "./page.module.css";
+import { initOTPless } from "@/utils/initOtpless";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  useEffect(()=>initOTPless(handleOtplessData),[])
-  const router = useRouter();
-const handleOtplessData = (otplessUser : any) =>{
-  localStorage.setItem('token',otplessUser.token);
-  router.push('/result');
-}
+  useEffect(()=>initOTPless(callback),[]);
+
+  const callback = (otplessUser:any) => {
+    localStorage.setItem('token',otplessUser.token);
+    (window as any).location.href = "/result";
+  };
+
   return (
-    <main className={styles.main}>
-      <div id="otpless-login-page"></div>
+    <main>
+      <button className="loginBtn" id="otpless" data-custom="true">Login</button>
     </main>
-  )
+  );
 }
