@@ -8,15 +8,10 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  const verifyToken = (token: string) => {
-    // verify token api
-  }
-
   useEffect(()=>{
     const urlParams = new URLSearchParams(window.location.search);
     const paramsValue = urlParams.get("ex");
     if (urlParams.get("ex")) initOTPless(callback);
-    else if(urlParams.get("token")) verifyToken(urlParams.get("token"))
   },[]);
   
 
@@ -27,11 +22,6 @@ export default function Home() {
     localStorage.setItem('token',otplessUser.token);
     router.push('/result');
   };
-
-  const loginPageRedirect = () => {
-    const client = 'sagarjariwala.com';
-    window.open(`https://otpless.com/${client}?redirect_uri=${encodeURIComponent(window.location.href)}`);
-  }
 
   const openModal = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -60,7 +50,6 @@ export default function Home() {
 
   const closeModal = (e : any) => {
     removeQueryParam('ex');
-
     const modalContainer = document.getElementById("modalContainer");
     if (e.target === modalContainer) {
       modalContainer? modalContainer.style.display = "none": "";
@@ -72,9 +61,6 @@ export default function Home() {
       <div className="modal-container" id="modalContainer" onClick={closeModal}>
           <div id="otpless-login-page"></div>
       </div>
-      <button id="loginBtn" onClick={loginPageRedirect}>
-        Login with redirect
-      </button>
       <button id="loginBtn" onClick={openModal}>
         Login with modal
       </button>
