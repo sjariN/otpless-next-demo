@@ -1,15 +1,17 @@
 export const initOTPless = (callback: Function) => {
+  const otplessInit = Reflect.get(window, "otplessInit");
 
-    const otplessInit = Reflect.get(window, 'otplessInit');
+  const loadScript = () => {
+    const isScriptLoaded = document.getElementById("otplessIdScript");
+    if(isScriptLoaded) return;
 
-    const loadScript = () =>{
-        const script = document.createElement("script")
-        script.src = "https://otpless.com/auth.js";
-        script.id = "otplessIdScript";
-        document.body.appendChild(script)
-    }
+    const script = document.createElement("script");
+    script.src = "https://otpless.com/auth.js";
+    script.id = "otplessIdScript";
+    document.body.appendChild(script);
+  };
 
-    otplessInit ? otplessInit() : loadScript();
+  otplessInit ? otplessInit() : loadScript();
 
-    Reflect.set(window, "otpless", callback);
-}
+  Reflect.set(window, "otpless", callback);
+};
