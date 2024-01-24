@@ -5,6 +5,7 @@ import { initOTPless } from "@/utils/initOtpless";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+// Note: We are adding 'ex' parameter to open login page automatically after redirection in between of authentication process
 export default function Home() {
   const router = useRouter();
 
@@ -16,9 +17,7 @@ export default function Home() {
   
 
   const callback = (otplessUser:any) => {
-    const currentURL = window.location.href;
-    const urlWithoutParams = currentURL.split("?")[0];
-    window.history.pushState(null, "", urlWithoutParams);
+    removeQueryParam("ex");
     localStorage.setItem('token',otplessUser.token);
     router.push('/result');
   };
