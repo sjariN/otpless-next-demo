@@ -1,6 +1,6 @@
 [![OTPless](https://d1j61bbz9a40n6.cloudfront.net/website/home/v4/logo/white_logo.svg)](https://otpless.com/platforms/react)
 
-# Next Demo
+# Next Demo : Otpless Login Page
 
 ## Steps to add OTPless SDK to your Next Website
 
@@ -56,7 +56,7 @@
 
 ### Integration Options
 
-- [OTPless-Page](https://github.com/sjarinN/otpless-next-demo/)
+- [OTPless-Page](https://github.com/sjariN/otpless-next-demo/)
 - [OTPless-Page-OnClick](https://github.com/sjariN/otpless-next-demo/tree/on-button-click-login-page)
 - [OTPless-Floater](https://github.com/sjariN/otpless-next-demo/tree/widget)
 - [OTPless-Floater-OnClick](https://github.com/sjariN/otpless-next-demo/tree/on-button-click-widget)
