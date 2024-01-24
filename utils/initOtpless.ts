@@ -8,6 +8,7 @@ export const initOTPless = (callback: Function) => {
     const script = document.createElement("script");
     script.src = "https://otpless.com/auth.js";
     script.id = "otplessIdScript";
+    script.setAttribute("cid","YOUR_CID");
     document.body.appendChild(script);
   };
 
