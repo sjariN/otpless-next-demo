@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![OTPless](https://d1j61bbz9a40n6.cloudfront.net/website/home/v4/logo/white_logo.svg)](https://otpless.com/platforms/react)
 
-## Getting Started
+# Next Demo : Otpless floater
 
-First, run the development server:
+## Steps to add OTPless SDK to your Next Website
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. **Add OTPLESS Script as utils function**
+
+> Add the following code to your utils/initOtpless.ts in root directory.
+
+```JavaScript
+  export const initOTPless = (callback: Function) => {
+  const otplessInit = Reflect.get(window, "otplessInit");
+
+  const loadScript = () => {
+    const isScriptLoaded = document.getElementById("otplessIdScript");
+    if(isScriptLoaded) return;
+
+    const script = document.createElement("script");
+    script.src = "https://otpless.com/auth.js";
+    script.id = "otplessIdScript";
+    script.setAttribute("cid","YOUR_CID");
+    document.body.appendChild(script);
+  };
+
+  otplessInit ? otplessInit() : loadScript();
+
+  Reflect.set(window, "otpless", callback);
+};
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Load the script in Login/Signup component and add callback function**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> - Add following code in Login/Signup component.
+> - retrive data using **otplessUser** object
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```jsx
+  useEffect(()=>initOTPless(callback),[]);
 
-## Learn More
+  const callback = (otplessUser:any) => {
+    alert({otplessUser});
+    // your code here
+  };
+```
 
-To learn more about Next.js, take a look at the following resources:
+### This demo implementation adds extra modularity, scalability and reusability to the otpless-auth sdk
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Integration Options
 
-## Deploy on Vercel
+- [OTPless-Page](https://github.com/sjariN/otpless-next-demo/)
+- [OTPless-Page-OnClick](https://github.com/sjariN/otpless-next-demo/tree/on-button-click-login-page)
+- [OTPless-Floater](https://github.com/sjariN/otpless-next-demo/tree/widget)
+- [OTPless-Floater-OnClick](https://github.com/sjariN/otpless-next-demo/tree/on-button-click-widget)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> **Prequisite** [NodeJS](https://nodejs.org/en)
+
+- Install Packages
+
+    ```bash
+    npm install
+    ```
+
+- Run the demo
+
+    ```bash
+    npm run dev
+    ```
+
+- Open [localhost:3000](http://localhost:3000) in your browser
+- Switch branches to check out available options to integrate *OTPless* in your project.
+
+
+> Received User Data Format  
+
+```json
+// otpless user Format
+{
+    "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "timestamp": "YYYY-MM-DD HH:MM:SS",
+    "timezone": "+XX:XX",
+    "mobile": {
+        "name": "User Name",
+        "number": "User Mobile Number"
+    },
+    "email": {
+        "name": "User Name ",
+        "email": "User Email"
+    }
+}
+```
