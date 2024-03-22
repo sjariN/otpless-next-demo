@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  useEffect(() => initOTPless(handleOtplessData), []);
+  useEffect(() => initOTPless(callback), []);
   const router = useRouter();
-  const handleOtplessData = (otplessUser: any) => {
+  const callback = (otplessUser: any) => {
     localStorage.setItem("token", otplessUser.token);
     router.push("/result");
   };
