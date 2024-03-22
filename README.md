@@ -9,17 +9,18 @@
 > Add the following code to your utils/initOtpless.ts in root directory.
 
 ```JavaScript
-  export const initOTPless = (callback: Function) => {
+export const initOTPless = (callback: Function) => {
   const otplessInit = Reflect.get(window, "otplessInit");
 
   const loadScript = () => {
-    const isScriptLoaded = document.getElementById("otplessIdScript");
-    if(isScriptLoaded) return;
+    const isScriptLoaded = document.getElementById("otpless-sdk");
+    if (isScriptLoaded) return;
 
     const script = document.createElement("script");
-    script.src = "https://otpless.com/auth.js";
-    script.id = "otplessIdScript";
-    script.setAttribute("cid","YOUR_CID");
+    script.id = "otpless-sdk";
+    script.type = "text/javascript";
+    script.src = "https://otpless.com/v2/auth.js";
+    script.setAttribute("data-appid", "YOUR_DATA_APPID");
     document.body.appendChild(script);
   };
 
@@ -36,16 +37,23 @@
 > - retrive data using **otplessUser** object
 
 ```jsx
-  useEffect(()=>initOTPless(callback),[]);
-
-  const callback = (otplessUser:any) => {
-    alert({otplessUser});
-    // your code here
+useEffect(() => {
+  initOTPless(callback);
+  return () => {
+    const floater = document.getElementById("otpless-floating-button");
+    if (floater) {
+      document.body.removeChild(floater);
+    }
   };
+});
+
+const callback = (otplessUser: any) => {
+  alert({ otplessUser });
+  // your code here
+};
 ```
 
 ### This demo implementation adds extra modularity, scalability and reusability to the otpless-auth sdk
-
 
 ### Integration Options
 
@@ -60,35 +68,34 @@
 
 - Install Packages
 
-    ```bash
-    npm install
-    ```
+  ```bash
+  npm install
+  ```
 
 - Run the demo
 
-    ```bash
-    npm run dev
-    ```
+  ```bash
+  npm run dev
+  ```
 
 - Open [localhost:3000](http://localhost:3000) in your browser
-- Switch branches to check out available options to integrate *OTPless* in your project.
+- Switch branches to check out available options to integrate _OTPless_ in your project.
 
-
-> Received User Data Format  
+> Received User Data Format
 
 ```json
 // otpless user Format
 {
-    "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "timestamp": "YYYY-MM-DD HH:MM:SS",
-    "timezone": "+XX:XX",
-    "mobile": {
-        "name": "User Name",
-        "number": "User Mobile Number"
-    },
-    "email": {
-        "name": "User Name ",
-        "email": "User Email"
-    }
+  "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "timestamp": "YYYY-MM-DD HH:MM:SS",
+  "timezone": "+XX:XX",
+  "mobile": {
+    "name": "User Name",
+    "number": "User Mobile Number"
+  },
+  "email": {
+    "name": "User Name ",
+    "email": "User Email"
+  }
 }
 ```

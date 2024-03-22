@@ -2,13 +2,14 @@ export const initOTPless = (callback: Function) => {
   const otplessInit = Reflect.get(window, "otplessInit");
 
   const loadScript = () => {
-    const isScriptLoaded = document.getElementById("otplessIdScript");
-    if(isScriptLoaded) return;
+    const isScriptLoaded = document.getElementById("otpless-sdk");
+    if (isScriptLoaded) return;
 
     const script = document.createElement("script");
-    script.src = "https://otpless.com/auth.js";
-    script.id = "otplessIdScript";
-    script.setAttribute("cid","YOUR_CID");
+    script.id = "otpless-sdk";
+    script.type = "text/javascript";
+    script.src = "https://otpless.com/v2/auth.js";
+    script.setAttribute("data-appid", "YOUR_DATA_APPID");
     document.body.appendChild(script);
   };
 
