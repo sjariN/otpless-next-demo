@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import styles from "./page.module.css";
 import { initOTPless } from "@/utils/initOtpless";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -9,17 +7,16 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const paramsValue = urlParams.get("ex");
     if (urlParams.get("ex")) initOTPless(callback);
-  },[]);
-  
+  }, []);
 
-  const callback = (otplessUser:any) => {
+  const callback = (otplessUser: any) => {
     removeQueryParam("ex");
-    localStorage.setItem('token',otplessUser.token);
-    router.push('/result');
+    localStorage.setItem("token", otplessUser.token);
+    router.push("/result");
   };
 
   const openModal = () => {
@@ -34,31 +31,31 @@ export default function Home() {
     }
     initOTPless(callback);
     const modalContainer = document.getElementById("modalContainer");
-    modalContainer? modalContainer.style.display = "flex": "";
+    modalContainer ? (modalContainer.style.display = "flex") : "";
 
     setTimeout(() => {
-      removeQueryParam('ex');
+      removeQueryParam("ex");
     }, 1000);
   };
 
   const removeQueryParam = (param) => {
     const url = new URL(window.location.href);
-    url.searchParams.delete(param)
+    url.searchParams.delete(param);
     window.history.pushState(null, "", url);
-  }
+  };
 
-  const closeModal = (e : any) => {
-    removeQueryParam('ex');
+  const closeModal = (e: any) => {
+    removeQueryParam("ex");
     const modalContainer = document.getElementById("modalContainer");
     if (e.target === modalContainer) {
-      modalContainer? modalContainer.style.display = "none": "";
+      modalContainer ? (modalContainer.style.display = "none") : "";
     }
   };
 
   return (
     <main>
       <div className="modal-container" id="modalContainer" onClick={closeModal}>
-          <div id="otpless-login-page"></div>
+        <div id="otpless-login-page"></div>
       </div>
       <button id="loginBtn" onClick={openModal}>
         Login with modal
