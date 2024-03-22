@@ -9,17 +9,18 @@
 > Add the following code to your utils/initOtpless.ts in root directory.
 
 ```JavaScript
-  export const initOTPless = (callback: Function) => {
+export const initOTPless = (callback: Function) => {
   const otplessInit = Reflect.get(window, "otplessInit");
 
   const loadScript = () => {
-    const isScriptLoaded = document.getElementById("otplessIdScript");
-    if(isScriptLoaded) return;
+    const isScriptLoaded = document.getElementById("otpless-sdk");
+    if (isScriptLoaded) return;
 
     const script = document.createElement("script");
-    script.src = "https://otpless.com/auth.js";
-    script.id = "otplessIdScript";
-    script.setAttribute("cid","YOUR_CID");
+    script.id = "otpless-sdk";
+    script.type = "text/javascript";
+    script.src = "https://otpless.com/v2/auth.js";
+    script.setAttribute("data-appid", "YOUR_DATA_APPID");
     document.body.appendChild(script);
   };
 
@@ -27,6 +28,7 @@
 
   Reflect.set(window, "otpless", callback);
 };
+
 
 ```
 
@@ -49,7 +51,9 @@
 > Add the following div in Login/Signup component.
 
 ```jsx
-<button className="loginBtn" id="otpless" data-custom="true">Login</button>
+<button className="loginBtn" id="otpless" data-custom="true">
+  Login
+</button>
 ```
 
 3. **Add following css in global css file**
@@ -68,7 +72,7 @@
 }
 
 /* center the floater */
-#otpless-floating-button{
+#otpless-floating-button {
   position: fixed !important;
   top: 50% !important;
   left: 50% !important;
