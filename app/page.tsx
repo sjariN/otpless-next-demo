@@ -19,23 +19,22 @@ export default function Home() {
     router.push("/result");
   };
 
-  const openModal = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const paramsValue = urlParams.get("ex");
-
-    if (!paramsValue) {
-      const currentURL = window.location.href;
-      const newParam1 = "ex=true";
-      const updatedURL = `${currentURL}?${newParam1}`;
-      window.history.pushState(null, "", updatedURL);
+  const appendParams = (param:string,value:string) =>{
+    const url = new URL(window.location.href);
+    const urlParams = new URLSearchParams(url.search);
+  
+    if (!urlParams.has(param)) {
+      urlParams.append(param, value);
     }
+    url.search = urlParams.toString();
+    window.history.pushState({}, '', url);
+  }
+
+  const openModal = () => {
+    appendParams("ex","true");
     initOTPless(callback);
     const modalContainer = document.getElementById("modalContainer");
     modalContainer ? (modalContainer.style.display = "flex") : "";
-
-    setTimeout(() => {
-      removeQueryParam("ex");
-    }, 1000);
   };
 
   const removeQueryParam = (param) => {
